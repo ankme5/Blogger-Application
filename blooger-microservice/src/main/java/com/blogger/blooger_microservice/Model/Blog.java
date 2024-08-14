@@ -13,10 +13,10 @@ public class Blog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String Blog_details;
-    @Column(nullable = false)
-    private String Blog_title;
+    private Integer id;
+    private String blog_details;
+    @Column(nullable = false,unique = true)
+    private String blog_title;
     private LocalDate created_date;
     private List<String> labels;
-    }
+}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,4 +29,29 @@ public class BlogService {
         log.info("fetching all blogs");
         return daoBlog.findAll();
     }
+
+    public void updateBlog(Blog blog, Integer id) {
+        log.info("updating blog");
+        Optional<Blog> currentBlog= daoBlog.findById(id);
+
+        if(currentBlog.isPresent()){
+            if(blog.getBlog_details()==null){
+                blog.setBlog_details(currentBlog.get().getBlog_details());
+            }
+            if(blog.getBlog_title()==null){
+                blog.setBlog_title(currentBlog.get().getBlog_title());
+            }
+            if(blog.getLabels()==null){
+                blog.setLabels(currentBlog.get().getLabels());
+            }
+            daoBlog.updateBlog(id,blog.getBlog_title(),blog.getBlog_details(),blog.getLabels());
+        }
+        else{
+            log.info("Record with id "+ id+ " is not found");
+        }
+
+
+
+    }
+
 }
