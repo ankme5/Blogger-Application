@@ -54,4 +54,8 @@ public class BlogService {
 
     }
 
+    public void deleteBlog(Integer id) {
+        daoBlog.deleteById(id);
+        log.info("Blog Deleted with id "+id);
+    }
 }

@@ -20,7 +20,6 @@ public class BlogController {
     private BlogService blogService;
 
 
-
     @PostMapping(value = "createBlog",produces = "application/json")
     ResponseEntity<Response> createBlog(@RequestBody Blog blog){
         Response response=new Response();
@@ -57,14 +56,30 @@ public class BlogController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @PostMapping("{id}/updateBlog")
+    @PutMapping("updateBlog/{id}")
     ResponseEntity<Response> updateBlog(@RequestBody Blog blog, @PathVariable Integer id){
         Response response=new Response();
         try {
-//            blogService.updateBlog(content.get("blog_details"),id);
             blogService.updateBlog(blog,id);
             response.setHttpStatus(HttpStatus.OK);
             response.setMessage("Blog Updated Successfully");
+            response.setStatus_code(HttpStatus.OK.value());
+        }catch (Exception ex){
+            response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            response.setMessage(ex.getMessage());
+            response.setStatus_code(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
+
+    @DeleteMapping("deleteBlog/{id}")
+    ResponseEntity<Response> deleteBlog(@PathVariable Integer id){
+        Response response=new Response();
+        try {
+            blogService.deleteBlog(id);
+            response.setHttpStatus(HttpStatus.OK);
+            response.setMessage("Blog Deleted Successfully");
             response.setStatus_code(HttpStatus.OK.value());
         }catch (Exception ex){
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
