@@ -50,12 +50,14 @@ public class BlogService {
             log.info("Record with id "+ id+ " is not found");
         }
 
-
-
     }
 
     public void deleteBlog(Integer id) {
         daoBlog.deleteById(id);
         log.info("Blog Deleted with id "+id);
+    }
+
+    public Optional<Blog> getBlogById(Integer id) {
+        return daoBlog.findById(id);
     }
 }

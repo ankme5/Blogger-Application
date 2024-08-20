@@ -19,4 +19,5 @@ public class Blog {
     private String blog_title;
     private LocalDate created_date;
     private List<String> labels;
+    private Integer user_id;
 }

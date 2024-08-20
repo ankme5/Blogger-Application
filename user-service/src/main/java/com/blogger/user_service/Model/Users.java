@@ -25,4 +25,5 @@ public class Users {
     private String token;
     @Column(updatable = true,length = 1)
     private Character isActive='Y';
+
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -68,5 +69,9 @@ public class AuthService {
             resp_map.put("message", e.getMessage());
         }
         return resp_map;
+    }
+
+    public Optional<Users> fetchUserById(Integer id) {
+        return userDao.findById(id);
     }
 }

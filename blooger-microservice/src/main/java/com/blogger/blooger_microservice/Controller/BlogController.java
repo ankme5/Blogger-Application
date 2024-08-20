@@ -3,15 +3,13 @@ package com.blogger.blooger_microservice.Controller;
 import com.blogger.blooger_microservice.Model.Blog;
 import com.blogger.blooger_microservice.Model.Response;
 import com.blogger.blooger_microservice.Service.BlogService;
-import org.springframework.beans.PropertyAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.Optional;
 
 @RestController
 public class BlogController {
@@ -36,6 +34,11 @@ public class BlogController {
         }
 
         return new ResponseEntity<>(response, response.getHttpStatus());
+    }
+
+    @GetMapping("getBlog/{id}")
+    ResponseEntity<Optional<Blog>> getBlogById(@PathVariable Integer id){
+        return ResponseEntity.ok(blogService.getBlogById(id));
     }
 
     @GetMapping("getAllBlogs")

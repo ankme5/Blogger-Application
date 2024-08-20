@@ -12,10 +12,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("v1/auth")
+@RequestMapping("v1/auth/users")
 public class AuthController {
 
     @Autowired
@@ -31,6 +32,7 @@ public class AuthController {
             response.setMessage("login success");
             response.setHttpStatus(HttpStatus.ACCEPTED);
             response.setStatus_code(HttpStatus.ACCEPTED.value());
+            response.setBody(accessToken);
         }catch (Exception e){
             log.debug(e.getMessage());
             log.info("Login Failed");
@@ -59,6 +61,11 @@ public class AuthController {
             response.setStatus_code(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
         return new ResponseEntity<>(response, response.getHttpStatus());
+    }
+
+    @GetMapping("{id}")
+    ResponseEntity<Optional<Users>> fetchUserById(@PathVariable Integer id){
+        return ResponseEntity.ok(authService.fetchUserById(id));
     }
 
     @GetMapping("fetchToken")
