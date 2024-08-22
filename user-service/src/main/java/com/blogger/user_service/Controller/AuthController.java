@@ -6,17 +6,14 @@ import com.blogger.user_service.Service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("v1/auth/users")
+@RequestMapping("v1/auth")
 public class AuthController {
 
     @Autowired
@@ -61,11 +58,6 @@ public class AuthController {
             response.setStatus_code(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
         return new ResponseEntity<>(response, response.getHttpStatus());
-    }
-
-    @GetMapping("{id}")
-    ResponseEntity<Optional<Users>> fetchUserById(@PathVariable Integer id){
-        return ResponseEntity.ok(authService.fetchUserById(id));
     }
 
     @GetMapping("fetchToken")

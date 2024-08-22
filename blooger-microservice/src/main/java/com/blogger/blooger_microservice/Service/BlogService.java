@@ -19,15 +19,15 @@ public class BlogService {
     private DaoBlog daoBlog;
 
     public Blog createBlog(Blog blog) throws PropertyValueException {
-        blog.setCreated_date(LocalDate.now());
+        blog.setCreatedDate(LocalDate.now());
         log.info("Blog Crated Successfully");
         return daoBlog.save(blog);
     }
 
 
-    public List<Blog> getAllBlogs() {
+    public List<Blog> getAllBlogs(Integer userId) {
         log.info("fetching all blogs");
-        return daoBlog.findAll();
+        return daoBlog.findByUserId(userId);
     }
 
     public void updateBlog(Blog blog, Integer id) {
@@ -35,16 +35,16 @@ public class BlogService {
         Optional<Blog> currentBlog= daoBlog.findById(id);
 
         if(currentBlog.isPresent()){
-            if(blog.getBlog_details()==null){
-                blog.setBlog_details(currentBlog.get().getBlog_details());
+            if(blog.getBlogDetails()==null){
+                blog.setBlogDetails(currentBlog.get().getBlogDetails());
             }
-            if(blog.getBlog_title()==null){
-                blog.setBlog_title(currentBlog.get().getBlog_title());
+            if(blog.getBlogTitle()==null){
+                blog.setBlogTitle(currentBlog.get().getBlogTitle());
             }
             if(blog.getLabels()==null){
                 blog.setLabels(currentBlog.get().getLabels());
             }
-            daoBlog.updateBlog(id,blog.getBlog_title(),blog.getBlog_details(),blog.getLabels());
+            daoBlog.updateBlog(id,blog.getBlogTitle(),blog.getBlogDetails(),blog.getLabels());
         }
         else{
             log.info("Record with id "+ id+ " is not found");

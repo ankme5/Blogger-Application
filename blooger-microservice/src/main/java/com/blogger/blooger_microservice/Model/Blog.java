@@ -14,10 +14,14 @@ public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String blog_details;
-    @Column(nullable = false,unique = true)
-    private String blog_title;
-    private LocalDate created_date;
+    @Column(name = "blog_details")
+    private String blogDetails;
+    @Column(nullable = false,unique = true,name = "blog_title")
+    private String blogTitle;
+    @Column(name = "created_date")
+    private LocalDate createdDate;
+    @Column(name = "labels")
     private List<String> labels;
-    private Integer user_id;
+    @Column(name = "user_id")
+    private Integer userId;
 }

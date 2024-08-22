@@ -12,13 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("Blog")
 public class BlogController {
 
     @Autowired
     private BlogService blogService;
 
 
-    @PostMapping(value = "createBlog",produces = "application/json")
+    @PostMapping(value = "create")
     ResponseEntity<Response> createBlog(@RequestBody Blog blog){
         Response response=new Response();
         try {
@@ -36,16 +37,16 @@ public class BlogController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @GetMapping("getBlog/{id}")
+    @GetMapping("get/{id}")
     ResponseEntity<Optional<Blog>> getBlogById(@PathVariable Integer id){
         return ResponseEntity.ok(blogService.getBlogById(id));
     }
 
-    @GetMapping("getAllBlogs")
-    ResponseEntity<Response> getAllBlogs(){
+    @GetMapping("getAll/{userId}")
+    ResponseEntity<Response> getAllBlogs(@PathVariable Integer userId){
         Response response=new Response();
         try {
-            List<Blog> b = blogService.getAllBlogs();
+            List<Blog> b = blogService.getAllBlogs(userId);
             response.setHttpStatus(HttpStatus.OK);
             response.setMessage("Blog Fetched Successfully");
             response.setStatus_code(HttpStatus.CREATED.value());
@@ -59,7 +60,7 @@ public class BlogController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @PutMapping("updateBlog/{id}")
+    @PutMapping("update/{id}")
     ResponseEntity<Response> updateBlog(@RequestBody Blog blog, @PathVariable Integer id){
         Response response=new Response();
         try {
@@ -76,7 +77,7 @@ public class BlogController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @DeleteMapping("deleteBlog/{id}")
+    @DeleteMapping("delete/{id}")
     ResponseEntity<Response> deleteBlog(@PathVariable Integer id){
         Response response=new Response();
         try {

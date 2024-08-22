@@ -70,8 +70,4 @@ public class AuthService {
         }
         return resp_map;
     }
-
-    public Optional<Users> fetchUserById(Integer id) {
-        return userDao.findById(id);
-    }
 }
