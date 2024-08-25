@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Component
 public class JWTHelper {
 
-//    @Value("${jwt.secret_key}")
+    @Value("${jwt.secret_key}")
     private  String secret;
 
     public String generateToken(String username, String role) {
@@ -28,6 +28,7 @@ public class JWTHelper {
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000*60*60*5))
                 .signWith(getSecretKey())
+//                .signWith(Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secret)))
                 .compact();
     }
 
