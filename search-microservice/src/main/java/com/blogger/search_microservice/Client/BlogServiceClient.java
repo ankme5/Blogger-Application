@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@FeignClient(name = "blogger-microservice",path = "blog")
+@FeignClient(name = "blogger-microservice",path = "basic")
 public interface BlogServiceClient {
 
-    @GetMapping("get/all")
+    @GetMapping("get/allblogs")
     List<Blog> getAllBlogs();
 
 }
