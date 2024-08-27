@@ -26,6 +26,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.lang.reflect.Parameter;
+import java.security.SignatureException;
 import java.util.List;
 
 @Component
@@ -84,8 +85,18 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
             response.setContentType("application/json");
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             response.getWriter().write("{\"Missing Header\":\""+ex.getMessage()+"\"}");
+        }catch (Exception ex){
+            response.setContentType("application/json");
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            response.getWriter().write("{\"Message\":\""+ex.getMessage()+"\"}");
         }
 
 
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path= request.getRequestURI();
+        return path.startsWith("/basic");
     }
 }

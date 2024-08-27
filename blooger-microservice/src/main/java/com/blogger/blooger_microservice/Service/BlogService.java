@@ -25,7 +25,7 @@ public class BlogService {
     }
 
 
-    public List<Blog> getAllBlogs(Integer userId) {
+    public List<Blog> findAllBlogs(Integer userId) {
         log.info("fetching all blogs");
         return daoBlog.findByUserId(userId);
     }
@@ -59,5 +59,9 @@ public class BlogService {
 
     public Optional<Blog> getBlogById(Integer id) {
         return daoBlog.findById(id);
+    }
+
+    public List<Blog> getAllBlogs() {
+        return daoBlog.findAll();
     }
 }

@@ -4,6 +4,7 @@ import com.blogger.blooger_microservice.Model.Blog;
 import com.blogger.blooger_microservice.Model.Response;
 import com.blogger.blooger_microservice.Service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("Blog")
+@RequestMapping("blog")
 public class BlogController {
 
     @Autowired
@@ -37,16 +38,16 @@ public class BlogController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @GetMapping("get/{id}")
+    @GetMapping("find/{id}")
     ResponseEntity<Optional<Blog>> getBlogById(@PathVariable Integer id){
         return ResponseEntity.ok(blogService.getBlogById(id));
     }
 
-    @GetMapping("getAll/{userId}")
-    ResponseEntity<Response> getAllBlogs(@PathVariable Integer userId){
+    @GetMapping("{userId}/find")
+    ResponseEntity<Response> findAllBlogs(@PathVariable Integer userId){
         Response response=new Response();
         try {
-            List<Blog> b = blogService.getAllBlogs(userId);
+            List<Blog> b = blogService.findAllBlogs(userId);
             response.setHttpStatus(HttpStatus.OK);
             response.setMessage("Blog Fetched Successfully");
             response.setStatus_code(HttpStatus.CREATED.value());
@@ -59,6 +60,7 @@ public class BlogController {
 
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+
 
     @PutMapping("update/{id}")
     ResponseEntity<Response> updateBlog(@RequestBody Blog blog, @PathVariable Integer id){

@@ -28,10 +28,13 @@ public class SpringConfig {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(r->r.anyRequest().authenticated())
+                .authorizeHttpRequests(r->r.requestMatchers("/basic/**").permitAll()
+                                .anyRequest().authenticated())
                 .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtVerifyFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(e->e.authenticationEntryPoint(authenticationFailureEntryPoint));
         return http.build();
     }
+
+
 }
